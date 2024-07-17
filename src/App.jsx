@@ -8,7 +8,6 @@ const App = () => {
   const [selectReview, setSelectReview] = useState(0);
   useEffect(() => {
     setReviews(reviewData);
-    //console.log(reviewData);
   });
   const getRandomNumber = () => {
     const minCeiled = Math.ceil(0);
@@ -19,34 +18,27 @@ const App = () => {
     if (selectReview === result) {
       return getRandomNumber();
     }
-    console.log(result);
     return result;
   };
-  const getNextReview = (nextIndex) => {
-    return nextIndex % reviews.length;
-    /*if (nextIndex === reviews.length) {
-      return 0;
-    } else if (nextIndex === -1) {
-      return reviews.length - 1;
-    } else {
-      return nextIndex;
-    }*/
+  const setNextReview = () => {
+    setSelectReview((currentIndex) => {
+      return (currentIndex + 1) % reviews.length;
+    });
+  };
+  const setPrevReview = () => {
+    setSelectReview((currentIndex) => {
+      return (currentIndex - 1 + reviews.length) % reviews.length;
+    });
   };
   return (
     <main>
       <article className="review">
         <Review {...reviews[selectReview]}></Review>
         <div className="btn-container">
-          <button
-            className="prev-btn"
-            onClick={() => setSelectReview(getNextReview(selectReview - 1))}
-          >
+          <button className="prev-btn" onClick={setNextReview}>
             <FaChevronLeft />
           </button>
-          <button
-            className="next-btn"
-            onClick={() => setSelectReview(getNextReview(selectReview + 1))}
-          >
+          <button className="next-btn" onClick={setPrevReview}>
             <FaChevronRight />
           </button>
         </div>
